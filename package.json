@@ -9,6 +9,9 @@
   "author": "AdaThink Lab",
   "license": "ISC",
   "dependencies": {
+    "adathink-sdk-bot": "0.0.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "mongodb": "^3.2.7"
   }
 }
