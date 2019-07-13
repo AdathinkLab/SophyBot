@@ -1,13 +1,19 @@
+// Importando libreria de mongo DB
 const mongodb = require('mongodb');
+const config = require("./../config.js")
 
+//Clase para manejar la conexion y consultas a la DB
 class MongoDB {
   constructor() {
-    this.URL = "mongodb+srv://SophyDB:SophyDB@sophydb-5atvq.mongodb.net/Sophy?retryWrites=true&w=majority"
-    this.DB = "Sophy"
-    this.COLLECTION_PLACE = "place"
+    // Datos de conexión con la base de datos
+    this.URL = config["MongoDB"]["url"]
+    this.DB = config["MongoDB"]["nameDB"]
+    this.COLLECTION_PLACE = config["MongoDB"]["collectionPlace"]
   }
+  // Funcion para conectar 
   connect(callback) {
     let _this = this
+    // Conectando a la DB
     mongodb.MongoClient.connect(this.URL, {
       useNewUrlParser: true
     }, function (err, client) {
@@ -21,7 +27,7 @@ class MongoDB {
       }
     })
   }
-
+  // Funcion para obtener un Patrimonio Cultural
   selectPlace() {
     let _this = this
     return new Promise((resolve, reject) => {
@@ -34,6 +40,7 @@ class MongoDB {
     })
   }
 
+  // Funcion para insertar Patrimonios Culturales
   insertPlace(data) {
     let _this = this
     return new Promise((resolve, reject) => {
@@ -46,6 +53,7 @@ class MongoDB {
     })
   }
 
+  // Funcion para obtener todos los patrimonios culturales
   selectAllPlace() {
     let _this = this
     return new Promise((resolve, reject) => {
@@ -58,7 +66,7 @@ class MongoDB {
     })
   }
 
-
+  // Funcion para cerrar la conexión
   closeConnection(){
     this.client.close()
     console.log("Conexion")
