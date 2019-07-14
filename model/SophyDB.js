@@ -1,7 +1,6 @@
 // Importando libreria de mongo DB
 const mongodb = require('mongodb');
 const config = require("./../config.js")
-
 //Clase para manejar la conexion y consultas a la DB
 class MongoDB {
   constructor() {
@@ -57,9 +56,45 @@ class MongoDB {
   selectAllPlace() {
     let _this = this
     return new Promise((resolve, reject) => {
-      let db = this.client.db(_this.DB);
+      let db = _this.client.db(_this.DB);
       let collection = db.collection(_this.COLLECTION_PLACE);
       collection.find({}).toArray((err, docs) => {
+        if (err) reject(err)
+        else resolve(docs)
+      })
+    })
+  }
+
+  selectAllPlaceProvincia(ciudad) {
+    let _this = this
+    return new Promise((resolve, reject) => {
+      let db = _this.client.db(_this.DB);
+      let collection = db.collection(_this.COLLECTION_PLACE);
+      collection.find({ciudad:ciudad}).toArray((err, docs) => {
+        if (err) reject(err)
+        else resolve(docs)
+      })
+    })
+  }
+
+  selectAllPlaceDistrito(distrito) {
+    let _this = this
+    return new Promise((resolve, reject) => {
+      let db = _this.client.db(_this.DB);
+      let collection = db.collection(_this.COLLECTION_PLACE);
+      collection.find({distrito:distrito}).toArray((err, docs) => {
+        if (err) reject(err)
+        else resolve(docs)
+      })
+    })
+  }
+
+  selectAllPlaceDistritoProvincia(distrito,ciudad) {
+    let _this = this
+    return new Promise((resolve, reject) => {
+      let db = _this.client.db(_this.DB);
+      let collection = db.collection(_this.COLLECTION_PLACE);
+      collection.find({ciudad:ciudad,distrito:distrito}).toArray((err, docs) => {
         if (err) reject(err)
         else resolve(docs)
       })
@@ -73,4 +108,14 @@ class MongoDB {
   }
 }
 
-module.exports = MongoDB
+ module.exports = MongoDB
+
+// let mongo = new MongoDB()
+
+// async function x (client){
+
+//   let places = await mongo.selectAllPlaceDistrito("Miraflores")
+//   console.log(places)
+// }
+
+// mongo.connect(x)
